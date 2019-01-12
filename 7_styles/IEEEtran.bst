@@ -285,6 +285,7 @@ ENTRY
     title
     type
     url
+    urldate
     volume
     year
     yearfiled
@@ -1906,23 +1907,23 @@ cap.status.std
 %% URL
 
 FUNCTION {format.url}
-{ is.use.url
-    { url empty$
-      { "" }
-      { this.to.prev.status
-        this.status.std
-        cap.yes 'status.cap :=
-        name.url.prefix " " *
-        "\url{" * url * "}" *
-        punct.no 'this.status.punct :=
-        punct.period 'prev.status.punct :=
-        space.normal 'this.status.space :=
-        space.normal 'prev.status.space :=
-        quote.no 'this.status.quote :=
-      }
-    if$
-    }
+{ url empty$
     { "" }
+    { this.to.prev.status
+      this.status.std
+      cap.yes 'status.cap :=
+      name.url.prefix " " *
+      "\url{" * url * "}" *
+      punct.no 'this.status.punct :=
+      punct.period 'prev.status.punct :=
+      space.normal 'this.status.space :=
+      space.normal 'prev.status.space :=
+      quote.no 'this.status.quote :=
+      urldate empty$
+       { "there is url but no urldate in " cite$ * warning$ }
+       { " [Accessed: " * urldate * "]" * }
+      if$
+    }
   if$
 }
 
